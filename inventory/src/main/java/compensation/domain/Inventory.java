@@ -22,15 +22,15 @@ public class Inventory {
     private Long stock;
 
     @PostPersist
-    public void onPostPersist() {
-        OutOfStock outOfStock = new OutOfStock(this);
-        outOfStock.publishAfterCommit();
-    }
+    public void onPostPersist() {}
 
     @PostUpdate
     public void onPostUpdate() {
         StockDecreased stockDecreased = new StockDecreased(this);
         stockDecreased.publishAfterCommit();
+
+        OutOfStock outOfStock = new OutOfStock(this);
+        outOfStock.publishAfterCommit();
     }
 
     public static InventoryRepository repository() {
